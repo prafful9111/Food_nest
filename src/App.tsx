@@ -11,6 +11,8 @@ import RiderDashboard from "./pages/RiderDashboard";
 import CookDashboard from "./pages/CookDashboard";
 import NotFound from "./pages/NotFound";
 
+
+
 const queryClient = new QueryClient();
 
 const App = () => (
@@ -20,6 +22,9 @@ const App = () => (
         <Toaster />
         <Sonner />
         <BrowserRouter>
+          <div>
+            {/* Language Switcher added globally */}
+         
           <Routes>
             <Route path="/" element={<Index />} />
             <Route path="/superadmin/*" element={<SuperAdminDashboard />} />
@@ -28,6 +33,7 @@ const App = () => (
             <Route path="/cook/*" element={<CookDashboard />} />
             <Route path="*" element={<NotFound />} />
           </Routes>
+            </div>
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>
