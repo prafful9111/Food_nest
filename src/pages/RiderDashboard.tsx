@@ -24,7 +24,7 @@ const sidebarItems = [
     icon: Package,
   },
   {
-    title: "Log Sales",
+    title: "Log Purchases",
     href: "/log-sales",
     icon: MapPin,
   },

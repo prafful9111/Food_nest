@@ -49,10 +49,12 @@ const LogSales = () => {
     return todaysSales.reduce((sum, sale) => sum + sale.amount, 0);
   };
 
+  const [paymentOption, setPaymentOption] = useState("");
+
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="font-bold text-3xl">Log Sales</h1>
+        <h1 className="font-bold text-3xl">Log Purchases</h1>
         <p className="text-muted-foreground">Record your food sales and track daily performance</p>
       </div>
 
@@ -111,6 +113,20 @@ const LogSales = () => {
                   onChange={(e) => setLocation(e.target.value)}
                 />
               </div>
+              <div className="space-y-2">
+                <Label htmlFor="payment-option">Payment Option</Label>
+                <Select value={paymentOption} onValueChange={setPaymentOption}>
+                  <SelectTrigger>
+                    <SelectValue placeholder="Select payment option" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="cash">Cash</SelectItem>
+                    <SelectItem value="card">Card</SelectItem>
+                    <SelectItem value="upi">UPI</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+
 
               {selectedItem && quantity && (
                 <div className="bg-muted p-3 rounded-lg">
@@ -134,46 +150,46 @@ const LogSales = () => {
               >
                 <span className="w-4 h-4">฿</span>
 
-                Record Sale
+                Add Purchase 
               </Button>
             </form>
           </CardContent>
         </Card>
 
-<Card className="bg-gradient-card shadow-card">
-  <CardHeader>
-    <CardTitle>Today's Performance</CardTitle>
-    <CardDescription>Your sales summary for today</CardDescription>
-  </CardHeader>
-  <CardContent>
-    <div className="space-y-4">
-      <div className="gap-4 grid grid-cols-3 text-center">
-        <div>
-          <p className="text-muted-foreground text-sm">Total Sales</p>
-          <p className="font-bold text-success text-2xl">
-            ฿{getTodayTotal().toFixed(2)} {/* Baht */}
-            <span className="ml-2 text-muted-foreground text-sm">
-              INR {(getTodayTotal() * 2.5).toFixed(0)} {/* INR */}
-            </span>
-          </p>
-        </div>
-        <div>
-          <p className="text-muted-foreground text-sm">Transactions</p>
-          <p className="font-bold text-2xl">{todaysSales.length}</p>
-        </div>
-        <div>
-          <p className="text-muted-foreground text-sm">Avg Sale</p>
-          <p className="font-bold text-2xl">
-            ฿{(getTodayTotal() / todaysSales.length).toFixed(2)} {/* Baht */}
-            <span className="ml-2 text-muted-foreground text-sm">
-              INR {((getTodayTotal() / todaysSales.length) * 2.5).toFixed(0)} {/* INR */}
-            </span>
-          </p>
-        </div>
-      </div>
-    </div>
-  </CardContent>
-</Card>
+        <Card className="bg-gradient-card shadow-card">
+          <CardHeader>
+            <CardTitle>Today's Performance</CardTitle>
+            <CardDescription>Your sales summary for today</CardDescription>
+          </CardHeader>
+          <CardContent>
+            <div className="space-y-4">
+              <div className="gap-4 grid grid-cols-3 text-center">
+                <div>
+                  <p className="text-muted-foreground text-sm">Total Sales</p>
+                  <p className="font-bold text-success text-2xl">
+                    ฿{getTodayTotal().toFixed(2)} {/* Baht */}
+                    <span className="ml-2 text-muted-foreground text-sm">
+                      INR {(getTodayTotal() * 2.5).toFixed(0)} {/* INR */}
+                    </span>
+                  </p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground text-sm">Transactions</p>
+                  <p className="font-bold text-2xl">{todaysSales.length}</p>
+                </div>
+                <div>
+                  <p className="text-muted-foreground text-sm">Avg Sale</p>
+                  <p className="font-bold text-2xl">
+                    ฿{(getTodayTotal() / todaysSales.length).toFixed(2)} {/* Baht */}
+                    <span className="ml-2 text-muted-foreground text-sm">
+                      INR {((getTodayTotal() / todaysSales.length) * 2.5).toFixed(0)} {/* INR */}
+                    </span>
+                  </p>
+                </div>
+              </div>
+            </div>
+          </CardContent>
+        </Card>
 
       </div>
 
