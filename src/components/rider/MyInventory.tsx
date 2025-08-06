@@ -87,11 +87,17 @@ const MyInventory = () => {
             <Package className="w-4 h-4 text-primary" />
           </CardHeader>
           <CardContent>
-            <div className="font-bold text-primary text-2xl">฿{getTotalValue().toFixed(2)}</div>
+            <div className="font-bold text-primary text-2xl">
+              ฿{getTotalValue().toFixed(2)}
+              <span className="ml-2 text-muted-foreground text-sm">
+                INR {(getTotalValue() * 2.5).toFixed(0)} {/* INR equivalent */}
+              </span>
+            </div>
             <p className="text-muted-foreground text-xs">
               Current inventory value
             </p>
           </CardContent>
+
         </Card>
 
         <Card className="bg-gradient-card shadow-card">
@@ -100,11 +106,17 @@ const MyInventory = () => {
             <Package className="w-4 h-4 text-success" />
           </CardHeader>
           <CardContent>
-            <div className="font-bold text-success text-2xl">฿{getTotalSalesValue().toFixed(2)}</div>
+            <div className="font-bold text-success text-2xl">
+              ฿{getTotalSalesValue().toFixed(2)}
+              <span className="ml-2 text-muted-foreground text-sm">
+                INR {(getTotalSalesValue() * 2.5).toFixed(0)} {/* INR equivalent */}
+              </span>
+            </div>
             <p className="text-muted-foreground text-xs">
               Value of items sold
             </p>
           </CardContent>
+
         </Card>
 
         <Card className="bg-gradient-card shadow-card">
@@ -129,8 +141,8 @@ const MyInventory = () => {
             <CardHeader className="pb-3">
               <div className="flex items-start gap-4">
                 <div className="bg-muted rounded-lg w-20 h-20 overflow-hidden">
-                  <img 
-                    src={item.image} 
+                  <img
+                    src={item.image}
                     alt={item.name}
                     className="w-full h-full object-cover"
                   />
@@ -141,7 +153,7 @@ const MyInventory = () => {
                       <CardTitle className="text-lg">{item.name}</CardTitle>
                       <CardDescription>฿{item.price} each</CardDescription>
                     </div>
-                    <Badge 
+                    <Badge
                       variant="outline"
                       className={getStatusColor(item.status)}
                     >
@@ -175,15 +187,30 @@ const MyInventory = () => {
                   <span>Sales Progress</span>
                   <span>{Math.round(getProgressValue(item.sold, item.assigned))}%</span>
                 </div>
-                <Progress 
-                  value={getProgressValue(item.sold, item.assigned)} 
+                <Progress
+                  value={getProgressValue(item.sold, item.assigned)}
                   className="h-2"
                 />
               </div>
 
               <div className="flex justify-between text-sm">
                 <span>Remaining Value:</span>
-                <span className="font-medium">฿{(item.remaining * item.price).toFixed(2)}</span>
+                <span className="font-medium">
+                  ฿{(item.remaining * item.price).toFixed(2)}
+                  <span className="ml-2 text-muted-foreground text-sm">
+                    INR {(item.remaining * item.price * 2.5).toFixed(0)} {/* INR equivalent */}
+                  </span>
+                </span>
+              </div>
+
+              <div className="flex justify-between text-sm">
+                <span>Price per Item:</span>
+                <span className="font-medium">
+                  ฿{item.price}
+                  <span className="ml-2 text-muted-foreground text-sm">
+                    INR {(item.price * 2.5).toFixed(0)} {/* INR equivalent */}
+                  </span>
+                </span>
               </div>
 
               {item.remaining <= 3 && (
@@ -193,6 +220,7 @@ const MyInventory = () => {
                 </Button>
               )}
             </CardContent>
+
           </Card>
         ))}
       </div>
@@ -215,7 +243,7 @@ const MyInventory = () => {
                 </div>
               ))}
             </div>
-            
+
             <div className="space-y-2">
               <h4 className="font-medium">Low Stock Items</h4>
               {inventoryItems.filter(item => item.status === 'low').map((item) => (

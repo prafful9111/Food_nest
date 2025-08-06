@@ -28,7 +28,7 @@ const FoodItems = () => {
           <h1 className="font-bold text-3xl">Food Items</h1>
           <p className="text-muted-foreground">Manage menu items and pricing</p>
         </div>
-        <Button 
+        <Button
           onClick={() => setIsAddingItem(!isAddingItem)}
           className="hover:bg-primary-hover bg-gradient-primary"
         >
@@ -47,7 +47,7 @@ const FoodItems = () => {
             <div className="gap-4 grid grid-cols-1 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="name">Food Name</Label>
-            
+
                 <Input id="name" placeholder="Enter food name" />
               </div>
               <div className="space-y-2">
@@ -55,7 +55,7 @@ const FoodItems = () => {
                 <Input id="price" type="number" placeholder="0.00" />
               </div>
             </div>
-            
+
             <div className="gap-4 grid grid-cols-1 md:grid-cols-2">
               <div className="space-y-2">
                 <Label htmlFor="category">Category</Label>
@@ -89,8 +89,8 @@ const FoodItems = () => {
           <Card key={item.id} className="bg-gradient-card shadow-card hover:shadow-warm transition-shadow">
             <CardHeader className="pb-2">
               <div className="bg-muted mb-2 rounded-lg aspect-square overflow-hidden">
-                <img 
-                  src={item.image} 
+                <img
+                  src={item.image}
                   alt={item.name}
                   className="w-full h-full object-cover"
                 />
@@ -100,7 +100,7 @@ const FoodItems = () => {
                   <CardTitle className="text-lg">{item.name}</CardTitle>
                   <CardDescription>{item.category}</CardDescription>
                 </div>
-                <Badge 
+                <Badge
                   variant={item.available ? "default" : "secondary"}
                   className={item.available ? "bg-success" : ""}
                 >
@@ -110,7 +110,12 @@ const FoodItems = () => {
             </CardHeader>
             <CardContent>
               <div className="flex justify-between items-center">
-                <span className="font-bold text-primary text-2xl">฿{item.price}</span>
+                <span className="font-bold text-primary text-2xl">
+                  ฿{item.price}
+                  <span className="ml-2 text-muted-foreground text-sm">
+                    INR {(item.price * 2.5).toFixed(0)} {/* Calculate INR */}
+                  </span>
+                </span>
                 <div className="flex gap-2">
                   <Button variant="outline" size="sm">
                     <Edit className="w-4 h-4" />
@@ -121,6 +126,7 @@ const FoodItems = () => {
                 </div>
               </div>
             </CardContent>
+
           </Card>
         ))}
       </div>

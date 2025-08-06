@@ -1,7 +1,8 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { useNavigate } from "react-router-dom";
-import { Crown, Users, Truck, ChefHat } from "lucide-react";
+import { Crown, Users, Truck, ChefHat, PackagePlus, Box } from "lucide-react";
+import { PackageSearchIcon } from "lucide-react";
 
 const userRoles = [
   {
@@ -34,6 +35,14 @@ const userRoles = [
     description: "Manage menu, track food prep, and request materials",
     icon: ChefHat,
     path: "/cook",
+    color: "bg-warning"
+  },
+  {
+    id: "refill-coordinator",
+    title: "Refill Coordinator",
+    description: "Manage refill requests, inventory, and kitchen coordination",
+    icon: PackageSearchIcon,
+    path: "/refill-coordinator",
     color: "bg-warning"
   }
 ];
@@ -69,7 +78,7 @@ const Index = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent>
-                <Button 
+                <Button
                   className="w-full"
                   onClick={() => navigate(role.path)}
                   variant="outline"

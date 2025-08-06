@@ -5,6 +5,7 @@ import CookOverview from "@/components/cook/CookOverview";
 import MyMenu from "@/components/cook/MyMenu";
 import FoodPrepStatus from "@/components/cook/FoodPrepStatus";
 import RawMaterialRequests from "@/components/cook/RawMaterialRequests";
+import RiderRequests from "@/components/cook/RiderRequests";
 import Specials from "@/components/cook/Specials";
 
 const sidebarItems = [
@@ -29,6 +30,11 @@ const sidebarItems = [
     icon: Package,
   },
   {
+    title: "Rider Requests",
+    href: "/rider-requests",
+    icon: UtensilsCrossed,
+  },
+  {
     title: "Specials",
     href: "/specials",
     icon: Star,
@@ -49,6 +55,7 @@ const CookDashboard = () => {
         <Route path="/menu" element={<MyMenu />} />
         <Route path="/prep-status" element={<FoodPrepStatus />} />
         <Route path="/raw-materials" element={<RawMaterialRequests />} />
+        <Route path="/rider-requests" element={<RiderRequests />} />
         <Route path="/specials" element={<Specials />} />
         <Route path="*" element={<Navigate to="/cook" replace />} />
       </Routes>

@@ -5,7 +5,7 @@ const SuperAdminOverview = () => {
   const analytics = [
     {
       title: "Total Sales",
-      value: "฿12,450",
+      value: "฿12,450 ",
       change: "+12.5%",
       icon: TrendingUp,
       color: "text-success"
@@ -48,11 +48,26 @@ const SuperAdminOverview = () => {
               <item.icon className={`h-4 w-4 ${item.color}`} />
             </CardHeader>
             <CardContent>
-              <div className="font-bold text-2xl">{item.value}</div>
+              <div className="font-bold text-2xl">
+                {item.title === "Total Sales" ? (
+                  <>
+                    {item.value}
+                    <span className="ml-2 text-muted-foreground text-sm">
+                      INR {(parseFloat(item.value.replace('฿', '').replace(',', '')) * 2.5).toFixed(0)}
+                    </span>
+                  </>
+                ) : (
+                  item.value
+                )}
+              </div>
               <p className={`text-xs ${item.color}`}>
                 {item.change} from last week
               </p>
             </CardContent>
+
+
+
+
           </Card>
         ))}
       </div>

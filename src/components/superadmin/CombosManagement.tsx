@@ -166,62 +166,74 @@ const CombosManagement = () => {
         </Dialog>
       </div>
 
-      <Card className="bg-gradient-card shadow-card">
-        <CardHeader>
-          <CardTitle className="flex items-center gap-2">
-            <Combine className="w-5 h-5" />
-            Existing Combos
-          </CardTitle>
-          <CardDescription>Manage your food combos and pricing</CardDescription>
-        </CardHeader>
-        <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Combo Name</TableHead>
-                <TableHead>Items</TableHead>
-                <TableHead>Price</TableHead>
-                <TableHead>Savings</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {combos.map((combo) => (
-                <TableRow key={combo.id}>
-                  <TableCell className="font-medium">{combo.name}</TableCell>
-                  <TableCell>
-                    <div className="flex flex-wrap gap-1">
-                      {combo.items.map((item, index) => (
-                        <Badge key={index} variant="outline" className="text-xs">
-                          {item}
-                        </Badge>
-                      ))}
-                    </div>
-                  </TableCell>
-                  <TableCell className="font-medium">฿{combo.price}</TableCell>
-                  <TableCell className="text-success">฿{combo.savings}</TableCell>
-                  <TableCell>
-                    <Badge variant={combo.status === "Active" ? "default" : "secondary"}>
-                      {combo.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex gap-2">
-                      <Button variant="outline" size="sm">
-                        <Edit className="w-4 h-4" />
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
-                </TableRow>
-              ))}
-            </TableBody>
-          </Table>
-        </CardContent>
-      </Card>
+<Card className="bg-gradient-card shadow-card">
+  <CardHeader>
+    <CardTitle className="flex items-center gap-2">
+      <Combine className="w-5 h-5" />
+      Existing Combos
+    </CardTitle>
+    <CardDescription>Manage your food combos and pricing</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <Table>
+      <TableHeader>
+        <TableRow>
+          <TableHead>Combo Name</TableHead>
+          <TableHead>Items</TableHead>
+          <TableHead>Price</TableHead>
+          <TableHead>Savings</TableHead>
+          <TableHead>Status</TableHead>
+          <TableHead>Actions</TableHead>
+        </TableRow>
+      </TableHeader>
+<TableBody>
+  {combos.map((combo) => (
+    <TableRow key={combo.id}>
+      <TableCell className="font-medium">{combo.name}</TableCell>
+      <TableCell>
+        <div className="flex flex-wrap gap-1">
+          {combo.items.map((item, index) => (
+            <Badge key={index} variant="outline" className="text-xs">
+              {item}
+            </Badge>
+          ))}
+        </div>
+      </TableCell>
+      <TableCell className="font-medium">
+        ฿{combo.price} 
+        <span className="ml-2 text-muted-foreground text-sm">
+          INR {(combo.price * 2.5).toFixed(0)} {/* INR equivalent for price */}
+        </span>
+      </TableCell>
+      <TableCell className="text-success">
+        ฿{combo.savings} 
+        <span className="ml-2 text-muted-foreground text-sm">
+          INR {(combo.savings * 2.5).toFixed(0)} {/* INR equivalent for savings */}
+        </span>
+      </TableCell>
+      <TableCell>
+        <Badge variant={combo.status === "Active" ? "default" : "secondary"}>
+          {combo.status}
+        </Badge>
+      </TableCell>
+      <TableCell>
+        <div className="flex gap-2">
+          <Button variant="outline" size="sm">
+            <Edit className="w-4 h-4" />
+          </Button>
+          <Button variant="outline" size="sm">
+            <Trash2 className="w-4 h-4" />
+          </Button>
+        </div>
+      </TableCell>
+    </TableRow>
+  ))}
+</TableBody>
+
+    </Table>
+  </CardContent>
+</Card>
+
     </div>
   );
 };

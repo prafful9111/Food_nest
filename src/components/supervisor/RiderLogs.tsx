@@ -5,11 +5,11 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { MapPin, DollarSign, AlertTriangle, User } from "lucide-react";
 
 const salesLogs = [
-  { id: 1, rider: "John Smith", item: "Classic Burger", quantity: 2, amount: "฿17.98", location: "Central Park", time: "11:30 AM" },
-  { id: 2, rider: "Mike Davis", item: "Chicken Tacos", quantity: 3, amount: "฿19.50", location: "Community Center", time: "11:45 AM" },
-  { id: 3, rider: "Sarah Johnson", item: "Fish & Chips", quantity: 1, amount: "฿9.99", location: "Marina", time: "12:15 PM" },
-  { id: 4, rider: "John Smith", item: "Caesar Salad", quantity: 1, amount: "฿7.99", location: "Business District", time: "12:30 PM" },
-  { id: 5, rider: "Mike Davis", item: "Classic Burger", quantity: 4, amount: "฿35.96", location: "Local School", time: "12:45 PM" },
+  { id: 1, rider: "John Smith", item: "Classic Burger", quantity: 2, amount: "17.98", location: "Central Park", time: "11:30 AM" },
+  { id: 2, rider: "Mike Davis", item: "Chicken Tacos", quantity: 3, amount: "19.50", location: "Community Center", time: "11:45 AM" },
+  { id: 3, rider: "Sarah Johnson", item: "Fish & Chips", quantity: 1, amount: "9.99", location: "Marina", time: "12:15 PM" },
+  { id: 4, rider: "John Smith", item: "Caesar Salad", quantity: 1, amount: "7.99", location: "Business District", time: "12:30 PM" },
+  { id: 5, rider: "Mike Davis", item: "Classic Burger", quantity: 4, amount: "35.96", location: "Local School", time: "12:45 PM" },
 ];
 
 const spoilageReports = [
@@ -76,7 +76,12 @@ const RiderLogs = () => {
                       <TableCell className="font-medium">{log.rider}</TableCell>
                       <TableCell>{log.item}</TableCell>
                       <TableCell>{log.quantity}</TableCell>
-                      <TableCell className="font-bold text-success">฿{log.amount}</TableCell>
+                      <TableCell className="font-bold text-success">
+                        ฿{log.amount}
+                        <span className="ml-2 text-muted-foreground text-sm">
+                          INR {(parseFloat(log.amount.replace('฿', '').replace(',', '')) * 2.5).toFixed(0)} {/* INR equivalent */}
+                        </span>
+                      </TableCell>
                       <TableCell className="flex items-center gap-1">
                         <MapPin className="w-3 h-3" />
                         {log.location}
@@ -85,6 +90,7 @@ const RiderLogs = () => {
                     </TableRow>
                   ))}
                 </TableBody>
+
               </Table>
             </CardContent>
           </Card>

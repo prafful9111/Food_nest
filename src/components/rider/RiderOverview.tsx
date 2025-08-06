@@ -1,7 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { DollarSign, Package, MapPin, TrendingUp } from "lucide-react";
-
+import SOSButton from "./SOSButton";
 const RiderOverview = () => {
   const todayStats = {
     sales: "฿245.50",
@@ -43,8 +43,9 @@ const RiderOverview = () => {
       <div>
         <h1 className="font-bold text-3xl">Rider Dashboard</h1>
         <p className="text-muted-foreground">Track your sales and manage your cart</p>
-      </div>
 
+      </div>
+      <SOSButton />
       <div className="gap-6 grid md:grid-cols-2 lg:grid-cols-4">
         <Card className="bg-gradient-card shadow-card">
           <CardHeader className="flex flex-row justify-between items-center space-y-0 pb-2">
@@ -53,11 +54,17 @@ const RiderOverview = () => {
 
           </CardHeader>
           <CardContent>
-            <div className="font-bold text-success text-2xl">{todayStats.sales}</div>
+            <div className="font-bold text-success text-2xl">
+              {todayStats.sales}
+              <span className="ml-2 text-muted-foreground text-sm">
+                INR {(parseFloat(todayStats.sales.replace('฿', '').replace(',', '')) * 2.5).toFixed(0)} {/* INR equivalent */}
+              </span>
+            </div>
             <p className="text-muted-foreground text-xs">
               {todayStats.orders} orders completed
             </p>
           </CardContent>
+
         </Card>
 
         <Card className="bg-gradient-card shadow-card">
@@ -94,11 +101,15 @@ const RiderOverview = () => {
           <CardContent>
             <div className="font-bold text-2xl">
               ฿{(parseFloat(todayStats.sales.replace('$', '฿')) / todayStats.orders).toFixed(2)}
+              <span className="ml-2 text-muted-foreground text-sm">
+                INR {(parseFloat(todayStats.sales.replace('$', '฿')) / todayStats.orders * 2.5).toFixed(0)} {/* INR equivalent */}
+              </span>
             </div>
             <p className="text-muted-foreground text-xs">
               Average order value
             </p>
           </CardContent>
+
         </Card>
       </div>
 
@@ -117,12 +128,18 @@ const RiderOverview = () => {
                     <p className="text-muted-foreground text-sm">{data.orders} orders</p>
                   </div>
                   <div className="text-right">
-                    <p className="font-bold text-success">{data.amount}</p>
+                    <p className="font-bold text-success">
+                      {data.amount}
+                      <span className="ml-2 text-muted-foreground text-sm">
+                        INR {(parseFloat(data.amount.replace('฿', '').replace(',', '')) * 2.5).toFixed(0)} {/* INR equivalent */}
+                      </span>
+                    </p>
                   </div>
                 </div>
               ))}
             </div>
           </CardContent>
+
         </Card>
 
         <Card className="bg-gradient-card shadow-card">
@@ -169,13 +186,19 @@ const RiderOverview = () => {
                   </p>
                 </div>
                 <div className="text-right">
-                  <p className="font-bold text-success">{sale.amount}</p>
+                  <p className="font-bold text-success">
+                    {sale.amount}
+                    <span className="ml-2 text-muted-foreground text-sm">
+                      INR {(parseFloat(sale.amount.replace('฿', '').replace(',', '')) * 2.5).toFixed(0)} {/* INR equivalent */}
+                    </span>
+                  </p>
                   <p className="text-muted-foreground text-xs">{sale.time}</p>
                 </div>
               </div>
             ))}
           </div>
         </CardContent>
+
       </Card>
     </div>
   );

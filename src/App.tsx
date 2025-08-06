@@ -10,6 +10,7 @@ import SupervisorDashboard from "./pages/SupervisorDashboard";
 import RiderDashboard from "./pages/RiderDashboard";
 import CookDashboard from "./pages/CookDashboard";
 import NotFound from "./pages/NotFound";
+import RefillCoordinatorDashboard from "./pages/RefillCoordinatorDashboard";
 
 
 
@@ -24,16 +25,17 @@ const App = () => (
         <BrowserRouter>
           <div>
             {/* Language Switcher added globally */}
-         
-          <Routes>
-            <Route path="/" element={<Index />} />
-            <Route path="/superadmin/*" element={<SuperAdminDashboard />} />
-            <Route path="/supervisor/*" element={<SupervisorDashboard />} />
-            <Route path="/rider/*" element={<RiderDashboard />} />
-            <Route path="/cook/*" element={<CookDashboard />} />
-            <Route path="*" element={<NotFound />} />
-          </Routes>
-            </div>
+
+            <Routes>
+              <Route path="/" element={<Index />} />
+              <Route path="/superadmin/*" element={<SuperAdminDashboard />} />
+              <Route path="/supervisor/*" element={<SupervisorDashboard />} />
+              <Route path="/rider/*" element={<RiderDashboard />} />
+              <Route path="/cook/*" element={<CookDashboard />} />
+              <Route path="/refill-coordinator/*" element={<RefillCoordinatorDashboard />} />
+              <Route path="*" element={<NotFound />} />
+            </Routes>
+          </div>
         </BrowserRouter>
       </TooltipProvider>
     </ThemeProvider>

@@ -43,18 +43,21 @@ const Analytics = () => {
               <Card key={data.period} className="bg-gradient-card shadow-card">
                 <CardHeader className="flex flex-row justify-between items-center space-y-0 pb-2">
                   <CardTitle className="font-medium text-sm">{data.period}</CardTitle>
-                  {/* Replace DollarSign with Thai Baht (฿) */}
-                  <span className="text-muted-foreground">฿</span>
                 </CardHeader>
                 <CardContent>
-                  <div className="font-bold text-primary text-2xl">{data.sales}</div>
+                  <div className="font-bold text-primary text-2xl">
+                    {data.sales}
+                    <span className="ml-2 text-muted-foreground text-sm">
+                      INR {(parseFloat(data.sales.replace('฿', '').replace(',', '')) * 2.5).toFixed(0)} {/* INR equivalent */}
+                    </span>
+                  </div>
                   <p className="text-muted-foreground text-xs">
                     {data.orders} orders • Avg: {data.avg}
                   </p>
                 </CardContent>
               </Card>
-
             ))}
+
           </div>
 
           <div className="gap-6 grid lg:grid-cols-2">
@@ -90,13 +93,19 @@ const Analytics = () => {
                         <p className="text-muted-foreground text-sm">{rider.route}</p>
                       </div>
                       <div className="text-right">
-                        <p className="font-bold">{rider.sales}</p>
+                        <p className="font-bold">
+                          {rider.sales}
+                          <span className="ml-2 text-muted-foreground text-sm">
+                            INR {(parseFloat(rider.sales.replace('฿', '').replace(',', '')) * 2.5).toFixed(0)} {/* INR equivalent */}
+                          </span>
+                        </p>
                         <p className="text-success text-sm">{rider.efficiency}</p>
                       </div>
                     </div>
                   ))}
                 </div>
               </CardContent>
+
             </Card>
           </div>
         </TabsContent>
@@ -135,12 +144,18 @@ const Analytics = () => {
                       </div>
                     </div>
                     <div className="text-right">
-                      <p className="font-bold text-primary">{item.revenue}</p>
+                      <p className="font-bold text-primary">
+                        {item.revenue}
+                        <span className="ml-2 text-muted-foreground text-sm">
+                          INR {(parseFloat(item.revenue.replace('฿', '').replace(',', '')) * 2.5).toFixed(0)} {/* INR equivalent */}
+                        </span>
+                      </p>
                     </div>
                   </div>
                 ))}
               </div>
             </CardContent>
+
           </Card>
         </TabsContent>
 
@@ -164,7 +179,12 @@ const Analytics = () => {
                     <div className="gap-4 grid grid-cols-2 text-sm">
                       <div>
                         <p className="text-muted-foreground">Sales</p>
-                        <p className="font-bold text-primary">{rider.sales}</p>
+                        <p className="font-bold text-primary">
+                          {rider.sales}
+                          <span className="ml-2 text-muted-foreground text-sm">
+                            INR {(parseFloat(rider.sales.replace('฿', '').replace(',', '')) * 2.5).toFixed(0)} {/* INR equivalent */}
+                          </span>
+                        </p>
                       </div>
                       <div>
                         <p className="text-muted-foreground">Efficiency</p>
@@ -175,6 +195,7 @@ const Analytics = () => {
                 ))}
               </div>
             </CardContent>
+
           </Card>
         </TabsContent>
       </Tabs>

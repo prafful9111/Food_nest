@@ -117,11 +117,15 @@ const LogSales = () => {
                   <div className="flex justify-between items-center">
                     <span className="font-medium">Total Amount:</span>
                     <span className="font-bold text-success text-lg">
-                      ฿{calculateTotal().toFixed(2)}
+                      ฿{calculateTotal().toFixed(2)} {/* Baht */}
+                      <span className="ml-2 text-muted-foreground text-sm">
+                        ₹{(calculateTotal() * 2.5).toFixed(0)} {/* INR */}
+                      </span>
                     </span>
                   </div>
                 </div>
               )}
+
 
               <Button
                 type="submit"
@@ -136,58 +140,41 @@ const LogSales = () => {
           </CardContent>
         </Card>
 
-        <Card className="bg-gradient-card shadow-card">
-          <CardHeader>
-            <CardTitle>Today's Performance</CardTitle>
-            <CardDescription>Your sales summary for today</CardDescription>
-          </CardHeader>
-          <CardContent>
-            <div className="space-y-4">
-              <div className="gap-4 grid grid-cols-3 text-center">
-                <div>
-                  <p className="text-muted-foreground text-sm">Total Sales</p>
-                  <p className="font-bold text-success text-2xl">
-                    ฿{getTodayTotal().toFixed(2)}
-                  </p>
-                </div>
-                <div>
-                  <p className="text-muted-foreground text-sm">Transactions</p>
-                  <p className="font-bold text-2xl">{todaysSales.length}</p>
-                </div>
-                <div>
-                  <p className="text-muted-foreground text-sm">Avg Sale</p>
-                  <p className="font-bold text-2xl">
-                    ฿{(getTodayTotal() / todaysSales.length).toFixed(2)}
-                  </p>
-                </div>
-              </div>
+<Card className="bg-gradient-card shadow-card">
+  <CardHeader>
+    <CardTitle>Today's Performance</CardTitle>
+    <CardDescription>Your sales summary for today</CardDescription>
+  </CardHeader>
+  <CardContent>
+    <div className="space-y-4">
+      <div className="gap-4 grid grid-cols-3 text-center">
+        <div>
+          <p className="text-muted-foreground text-sm">Total Sales</p>
+          <p className="font-bold text-success text-2xl">
+            ฿{getTodayTotal().toFixed(2)} {/* Baht */}
+            <span className="ml-2 text-muted-foreground text-sm">
+              INR {(getTodayTotal() * 2.5).toFixed(0)} {/* INR */}
+            </span>
+          </p>
+        </div>
+        <div>
+          <p className="text-muted-foreground text-sm">Transactions</p>
+          <p className="font-bold text-2xl">{todaysSales.length}</p>
+        </div>
+        <div>
+          <p className="text-muted-foreground text-sm">Avg Sale</p>
+          <p className="font-bold text-2xl">
+            ฿{(getTodayTotal() / todaysSales.length).toFixed(2)} {/* Baht */}
+            <span className="ml-2 text-muted-foreground text-sm">
+              INR {((getTodayTotal() / todaysSales.length) * 2.5).toFixed(0)} {/* INR */}
+            </span>
+          </p>
+        </div>
+      </div>
+    </div>
+  </CardContent>
+</Card>
 
-              <div className="space-y-2">
-                <h4 className="font-medium">Quick Stats</h4>
-                <div className="gap-2 grid grid-cols-2 text-sm">
-                  <div className="flex justify-between">
-                    <span>Items Sold:</span>
-                    <span className="font-medium">
-                      {todaysSales.reduce((sum, sale) => sum + sale.quantity, 0)}
-                    </span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Best Location:</span>
-                    <span className="font-medium">Central Park</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Top Item:</span>
-                    <span className="font-medium">Classic Burger</span>
-                  </div>
-                  <div className="flex justify-between">
-                    <span>Last Sale:</span>
-                    <span className="font-medium">12:30 PM</span>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </CardContent>
-        </Card>
       </div>
 
       <Card className="bg-gradient-card shadow-card">
@@ -212,7 +199,10 @@ const LogSales = () => {
                   <TableCell className="font-medium">{sale.item}</TableCell>
                   <TableCell>{sale.quantity}</TableCell>
                   <TableCell className="font-bold text-success">
-                    ฿{sale.amount.toFixed(2)}
+                    ฿{sale.amount.toFixed(2)} {/* Baht */}
+                    <span className="ml-2 text-muted-foreground text-sm">
+                      INR {(sale.amount * 2.5).toFixed(0)} {/* INR */}
+                    </span>
                   </TableCell>
                   <TableCell className="flex items-center gap-1">
                     <MapPin className="w-3 h-3" />
@@ -222,6 +212,7 @@ const LogSales = () => {
                 </TableRow>
               ))}
             </TableBody>
+
           </Table>
         </CardContent>
       </Card>
