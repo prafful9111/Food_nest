@@ -6,7 +6,7 @@ import MyRoute from "@/components/rider/MyRoute";
 import MyInventory from "@/components/rider/MyInventory";
 import LogSales from "@/components/rider/LogSales";
 import RequestMore from "@/components/rider/RequestMore";
-import CartHealth from "@/components/rider/CARTHEALTH";
+import CartHealth from "@/components/rider/carthealth";
 
 
 const sidebarItems = [
@@ -57,7 +57,7 @@ const RiderDashboard = () => {
         <Route path="/inventory" element={<MyInventory />} />
         <Route path="/log-sales" element={<LogSales />} />
         <Route path="/request" element={<RequestMore />} />
-        <Route path="/CartHealth" element={<CartHealth />} />
+        <Route path="/carthealth" element={<CartHealth />} />
         <Route path="*" element={<Navigate to="/rider" replace />} />
       </Routes>
     </DashboardLayout>
