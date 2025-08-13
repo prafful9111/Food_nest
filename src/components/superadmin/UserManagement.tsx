@@ -23,13 +23,13 @@ const UserManagement = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">User Management</h1>
+          <h1 className="font-bold text-3xl">User Management</h1>
           <p className="text-muted-foreground">Manage system users and their roles</p>
         </div>
         <Dialog open={isAddUserOpen} onOpenChange={setIsAddUserOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-gradient-primary hover:bg-primary-hover">
-              <Plus className="h-4 w-4 mr-2" />
+            <Button className="hover:bg-primary-hover bg-gradient-primary">
+              <Plus className="mr-2 w-4 h-4" />
               Add User
             </Button>
           </DialogTrigger>
@@ -40,20 +40,20 @@ const UserManagement = () => {
                 Create a new user account for the system.
               </DialogDescription>
             </DialogHeader>
-            <div className="grid gap-4 py-4">
-              <div className="grid grid-cols-4 items-center gap-4">
+            <div className="gap-4 grid py-4">
+              <div className="items-center gap-4 grid grid-cols-4">
                 <Label htmlFor="name" className="text-right">
                   Name
                 </Label>
                 <Input id="name" placeholder="Full name" className="col-span-3" />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
+              <div className="items-center gap-4 grid grid-cols-4">
                 <Label htmlFor="email" className="text-right">
                   Email
                 </Label>
                 <Input id="email" placeholder="user@email.com" className="col-span-3" />
               </div>
-              <div className="grid grid-cols-4 items-center gap-4">
+              <div className="items-center gap-4 grid grid-cols-4">
                 <Label htmlFor="role" className="text-right">
                   Role
                 </Label>
@@ -66,6 +66,7 @@ const UserManagement = () => {
                     <SelectItem value="cook">Cook</SelectItem>
                     <SelectItem value="supervisor">Supervisor</SelectItem>
                     <SelectItem value="admin">Admin</SelectItem>
+                    <SelectItem value="superadmin">Kitchen Helper</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
@@ -112,12 +113,12 @@ const UserManagement = () => {
                     </Badge>
                   </TableCell>
                   <TableCell className="text-right">
-                    <div className="flex gap-2 justify-end">
+                    <div className="flex justify-end gap-2">
                       <Button variant="outline" size="sm">
-                        <Edit className="h-4 w-4" />
+                        <Edit className="w-4 h-4" />
                       </Button>
                       <Button variant="outline" size="sm">
-                        <Trash2 className="h-4 w-4" />
+                        <Trash2 className="w-4 h-4" />
                       </Button>
                     </div>
                   </TableCell>

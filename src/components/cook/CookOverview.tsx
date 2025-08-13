@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { ChefHat, Clock, Package, Star } from "lucide-react";
+import SOSButton from "../rider/SOSButton";
 
 const CookOverview = () => {
   const stats = [
@@ -13,19 +14,19 @@ const CookOverview = () => {
   return (
     <div className="space-y-6">
       <div>
-        <h1 className="text-3xl font-bold">Cook Dashboard</h1>
+        <h1 className="font-bold text-3xl">Cook Dashboard</h1>
         <p className="text-muted-foreground">Manage your kitchen operations</p>
       </div>
-
-      <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-4">
+    <SOSButton />
+      <div className="gap-6 grid md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (
           <Card key={stat.title} className="bg-gradient-card shadow-card">
-            <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-2">
-              <CardTitle className="text-sm font-medium">{stat.title}</CardTitle>
+            <CardHeader className="flex flex-row justify-between items-center space-y-0 pb-2">
+              <CardTitle className="font-medium text-sm">{stat.title}</CardTitle>
               <stat.icon className={`h-4 w-4 ${stat.color}`} />
             </CardHeader>
             <CardContent>
-              <div className="text-2xl font-bold">{stat.value}</div>
+              <div className="font-bold text-2xl">{stat.value}</div>
             </CardContent>
           </Card>
         ))}

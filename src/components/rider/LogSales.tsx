@@ -9,18 +9,18 @@ import { Badge } from "@/components/ui/badge";
 import { Plus, DollarSign, MapPin } from "lucide-react";
 
 const availableItems = [
-  { id: 1, name: "Classic Burger", price: 8.99, remaining: 8 },
-  { id: 2, name: "Chicken Tacos", price: 6.50, remaining: 7 },
-  { id: 3, name: "Fish & Chips", price: 9.99, remaining: 4 },
-  { id: 4, name: "Caesar Salad", price: 7.99, remaining: 5 },
+  { id: 1, name: "Vada Pavr", price: 8.99, remaining: 8 },
+  { id: 2, name: "Poha", price: 6.50, remaining: 7 },
+  { id: 3, name: "Tea", price: 9.99, remaining: 4 },
+  { id: 4, name: "Water Bottle", price: 7.99, remaining: 5 },
 ];
 
 const todaysSales = [
-  { id: 1, item: "Classic Burger", quantity: 2, amount: 17.98, location: "Central Park", time: "12:30 PM" },
-  { id: 2, item: "Chicken Tacos", quantity: 1, amount: 6.50, location: "Business District", time: "12:15 PM" },
-  { id: 3, item: "Fish & Chips", quantity: 1, amount: 9.99, location: "City Hall", time: "12:00 PM" },
-  { id: 4, item: "Caesar Salad", quantity: 1, amount: 7.99, location: "Central Park", time: "11:45 AM" },
-  { id: 5, item: "Classic Burger", quantity: 3, amount: 26.97, location: "Business District", time: "11:30 AM" },
+  { id: 1, item: "Vada Pav", quantity: 2, amount: 17.98, location: "Central Park", time: "12:30 PM" },
+  { id: 2, item: "Poha", quantity: 1, amount: 6.50, location: "Business District", time: "12:15 PM" },
+  { id: 3, item: "Tea", quantity: 1, amount: 9.99, location: "City Hall", time: "12:00 PM" },
+  { id: 4, item: "Poha", quantity: 1, amount: 7.99, location: "Central Park", time: "11:45 AM" },
+  { id: 5, item: "Water Bottle", quantity: 3, amount: 26.97, location: "Business District", time: "11:30 AM" },
 ];
 
 const LogSales = () => {

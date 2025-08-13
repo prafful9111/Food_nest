@@ -2,6 +2,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { Clock, Package, AlertTriangle, CheckCircle, Users } from "lucide-react";
+import SOSButton from "../rider/SOSButton";
 
 const RefillCoordinatorOverview = () => {
   const stats = {
@@ -48,7 +49,7 @@ const RefillCoordinatorOverview = () => {
         <h1 className="font-bold text-3xl">Refill Coordinator Dashboard</h1>
         <p className="text-muted-foreground">Manage refill requests and coordinate with kitchen</p>
       </div>
-
+    <SOSButton />
       <div className="gap-6 grid md:grid-cols-2 lg:grid-cols-4">
         <Card className="bg-gradient-card shadow-card">
           <CardHeader className="flex flex-row justify-between items-center space-y-0 pb-2">

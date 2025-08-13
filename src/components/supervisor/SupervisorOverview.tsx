@@ -1,6 +1,7 @@
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Truck, Users, Package, AlertCircle } from "lucide-react";
+import SOSButton from "../rider/SOSButton";
 
 const SupervisorOverview = () => {
   const stats = [
@@ -28,6 +29,7 @@ const SupervisorOverview = () => {
         <h1 className="font-bold text-3xl">Supervisor Dashboard</h1>
         <p className="text-muted-foreground">Monitor operations and manage your team</p>
       </div>
+          <SOSButton />
 
       <div className="gap-6 grid md:grid-cols-2 lg:grid-cols-4">
         {stats.map((stat) => (

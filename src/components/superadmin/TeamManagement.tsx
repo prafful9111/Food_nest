@@ -41,7 +41,7 @@ const teams = [
   },
   {
     id: 2,
-    name: "Suburban Team", 
+    name: "Suburban Team",
     supervisors: ["Carol Davis"],
     riders: ["Emily Davis"],
     cooks: ["Maria Garcia"],
@@ -69,15 +69,15 @@ const TeamManagement = () => {
 
   const handleUserSelection = (userName: string, userType: 'supervisors' | 'riders' | 'cooks', checked: boolean) => {
     if (userType === 'supervisors') {
-      setSelectedSupervisors(prev => 
+      setSelectedSupervisors(prev =>
         checked ? [...prev, userName] : prev.filter(s => s !== userName)
       );
     } else if (userType === 'riders') {
-      setSelectedRiders(prev => 
+      setSelectedRiders(prev =>
         checked ? [...prev, userName] : prev.filter(r => r !== userName)
       );
     } else if (userType === 'cooks') {
-      setSelectedCooks(prev => 
+      setSelectedCooks(prev =>
         checked ? [...prev, userName] : prev.filter(c => c !== userName)
       );
     }
@@ -96,13 +96,13 @@ const TeamManagement = () => {
     <div className="space-y-6">
       <div className="flex justify-between items-center">
         <div>
-          <h1 className="text-3xl font-bold">Team Management</h1>
+          <h1 className="font-bold text-3xl">Team Management</h1>
           <p className="text-muted-foreground">Create and manage teams with supervisors</p>
         </div>
         <Dialog open={isOpen} onOpenChange={setIsOpen}>
           <DialogTrigger asChild>
-            <Button className="bg-gradient-primary hover:bg-primary-hover">
-              <Plus className="h-4 w-4 mr-2" />
+            <Button className="hover:bg-primary-hover bg-gradient-primary">
+              <Plus className="mr-2 w-4 h-4" />
               Create Team
             </Button>
           </DialogTrigger>
@@ -123,24 +123,24 @@ const TeamManagement = () => {
                   placeholder="Enter team name"
                 />
               </div>
-              
+
               <div className="space-y-4">
                 <div className="space-y-3">
                   <Label className="flex items-center gap-2">
-                    <User className="h-4 w-4" />
+                    <User className="w-4 h-4" />
                     Select Supervisors
                   </Label>
-                  <div className="grid gap-2 max-h-32 overflow-y-auto border rounded-md p-2">
+                  <div className="gap-2 grid p-2 border rounded-md max-h-32 overflow-y-auto">
                     {supervisors.filter(s => s.available).map((supervisor) => (
                       <div key={supervisor.id} className="flex items-center space-x-2">
                         <Checkbox
                           id={`supervisor-${supervisor.id}`}
                           checked={selectedSupervisors.includes(supervisor.name)}
-                          onCheckedChange={(checked) => 
+                          onCheckedChange={(checked) =>
                             handleUserSelection(supervisor.name, 'supervisors', checked as boolean)
                           }
                         />
-                        <Label htmlFor={`supervisor-${supervisor.id}`} className="text-sm font-normal">
+                        <Label htmlFor={`supervisor-${supervisor.id}`} className="font-normal text-sm">
                           {supervisor.name}
                         </Label>
                       </div>
@@ -150,20 +150,20 @@ const TeamManagement = () => {
 
                 <div className="space-y-3">
                   <Label className="flex items-center gap-2">
-                    <Car className="h-4 w-4" />
+                    <Car className="w-4 h-4" />
                     Select Riders
                   </Label>
-                  <div className="grid gap-2 max-h-32 overflow-y-auto border rounded-md p-2">
+                  <div className="gap-2 grid p-2 border rounded-md max-h-32 overflow-y-auto">
                     {riders.filter(r => r.available).map((rider) => (
                       <div key={rider.id} className="flex items-center space-x-2">
                         <Checkbox
                           id={`rider-${rider.id}`}
                           checked={selectedRiders.includes(rider.name)}
-                          onCheckedChange={(checked) => 
+                          onCheckedChange={(checked) =>
                             handleUserSelection(rider.name, 'riders', checked as boolean)
                           }
                         />
-                        <Label htmlFor={`rider-${rider.id}`} className="text-sm font-normal">
+                        <Label htmlFor={`rider-${rider.id}`} className="font-normal text-sm">
                           {rider.name}
                         </Label>
                       </div>
@@ -173,20 +173,43 @@ const TeamManagement = () => {
 
                 <div className="space-y-3">
                   <Label className="flex items-center gap-2">
-                    <UtensilsCrossed className="h-4 w-4" />
+                    <UtensilsCrossed className="w-4 h-4" />
                     Select Cooks
                   </Label>
-                  <div className="grid gap-2 max-h-32 overflow-y-auto border rounded-md p-2">
+                  <div className="gap-2 grid p-2 border rounded-md max-h-32 overflow-y-auto">
                     {cooks.filter(c => c.available).map((cook) => (
                       <div key={cook.id} className="flex items-center space-x-2">
                         <Checkbox
                           id={`cook-${cook.id}`}
                           checked={selectedCooks.includes(cook.name)}
-                          onCheckedChange={(checked) => 
+                          onCheckedChange={(checked) =>
                             handleUserSelection(cook.name, 'cooks', checked as boolean)
                           }
                         />
-                        <Label htmlFor={`cook-${cook.id}`} className="text-sm font-normal">
+                        <Label htmlFor={`cook-${cook.id}`} className="font-normal text-sm">
+                          {cook.name}
+                        </Label>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="space-y-3">
+                  <Label className="flex items-center gap-2">
+                    <UtensilsCrossed className="w-4 h-4" />
+                    Select Kitchen Helpers
+                  </Label>
+                  <div className="gap-2 grid p-2 border rounded-md max-h-32 overflow-y-auto">
+                    {cooks.filter(c => c.available).map((cook) => (
+                      <div key={cook.id} className="flex items-center space-x-2">
+                        <Checkbox
+                          id={`cook-${cook.id}`}
+                          checked={selectedCooks.includes(cook.name)}
+                          onCheckedChange={(checked) =>
+                            handleUserSelection(cook.name, 'cooks', checked as boolean)
+                          }
+                        />
+                        <Label htmlFor={`cook-${cook.id}`} className="font-normal text-sm">
                           {cook.name}
                         </Label>
                       </div>
@@ -196,7 +219,7 @@ const TeamManagement = () => {
               </div>
 
               {(selectedSupervisors.length > 0 || selectedRiders.length > 0 || selectedCooks.length > 0) && (
-                <div className="space-y-3 border-t pt-4">
+                <div className="space-y-3 pt-4 border-t">
                   <Label>Selected Team Members</Label>
                   <div className="space-y-2">
                     {selectedSupervisors.length > 0 && (
@@ -238,10 +261,10 @@ const TeamManagement = () => {
                   </div>
                 </div>
               )}
-              
+
               <div className="flex gap-2 pt-4 border-t">
-                <Button 
-                  onClick={handleCreateTeam} 
+                <Button
+                  onClick={handleCreateTeam}
                   disabled={!teamName || (selectedSupervisors.length === 0 && selectedRiders.length === 0 && selectedCooks.length === 0)}
                 >
                   Create Team
@@ -255,14 +278,14 @@ const TeamManagement = () => {
         </Dialog>
       </div>
 
-      <div className="grid gap-6">
+      <div className="gap-6 grid">
         {teams.map((team) => (
           <Card key={team.id} className="bg-gradient-card shadow-card">
             <CardHeader>
-              <div className="flex items-start justify-between">
+              <div className="flex justify-between items-start">
                 <div>
-                  <CardTitle className="text-xl flex items-center gap-2">
-                    <UsersRound className="h-5 w-5" />
+                  <CardTitle className="flex items-center gap-2 text-xl">
+                    <UsersRound className="w-5 h-5" />
                     {team.name}
                   </CardTitle>
                   <CardDescription className="flex items-center gap-4 mt-2">
@@ -277,8 +300,8 @@ const TeamManagement = () => {
               <div className="space-y-4">
                 {team.supervisors.length > 0 && (
                   <div>
-                    <h4 className="font-medium mb-2 flex items-center gap-2">
-                      <User className="h-4 w-4" />
+                    <h4 className="flex items-center gap-2 mb-2 font-medium">
+                      <User className="w-4 h-4" />
                       Supervisors ({team.supervisors.length})
                     </h4>
                     <div className="flex flex-wrap gap-2">
@@ -290,11 +313,11 @@ const TeamManagement = () => {
                     </div>
                   </div>
                 )}
-                
+
                 {team.riders && team.riders.length > 0 && (
                   <div>
-                    <h4 className="font-medium mb-2 flex items-center gap-2">
-                      <Car className="h-4 w-4" />
+                    <h4 className="flex items-center gap-2 mb-2 font-medium">
+                      <Car className="w-4 h-4" />
                       Riders ({team.riders.length})
                     </h4>
                     <div className="flex flex-wrap gap-2">
@@ -306,11 +329,11 @@ const TeamManagement = () => {
                     </div>
                   </div>
                 )}
-                
+
                 {team.cooks && team.cooks.length > 0 && (
                   <div>
-                    <h4 className="font-medium mb-2 flex items-center gap-2">
-                      <UtensilsCrossed className="h-4 w-4" />
+                    <h4 className="flex items-center gap-2 mb-2 font-medium">
+                      <UtensilsCrossed className="w-4 h-4" />
                       Cooks ({team.cooks.length})
                     </h4>
                     <div className="flex flex-wrap gap-2">

@@ -61,6 +61,11 @@ const FoodItems = () => {
                 <Label htmlFor="category">Category</Label>
                 <Input id="category" placeholder="e.g., Burger, Mexican" />
               </div>
+              {/* ✅ New Tax/VAT Input */}
+              <div className="space-y-2">
+                <Label htmlFor="tax">Tax / VAT (%)</Label>
+                <Input id="tax" type="number" placeholder="e.g., 5" />
+              </div>
               <div className="flex items-center space-x-2">
                 <Switch id="available" />
                 <Label htmlFor="available">Available</Label>

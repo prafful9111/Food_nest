@@ -88,7 +88,7 @@ const MyRoute = () => {
       <div>
         <h1 className="font-bold text-3xl">My Route</h1>
         <p className="text-muted-foreground">Your assigned route and current progress</p>
-        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d21999.02059654968!2d100.87225981231515!3d12.913238405114274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310295924d31d7e3%3A0xa97ff301a9bd10ff!2sPattaya%20City%2C%20Bang%20Lamung%20District%2C%20Chon%20Buri%2020150%2C%20Thailand!5e0!3m2!1sen!2sin!4v1754486212478!5m2!1sen!2sin" width="1900" height="450"></iframe>
+        <iframe src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d21999.02059654968!2d100.87225981231515!3d12.913238405114274!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x310295924d31d7e3%3A0xa97ff301a9bd10ff!2sPattaya%20City%2C%20Bang%20Lamung%20District%2C%20Chon%20Buri%2020150%2C%20Thailand!5e0!3m2!1sen!2sin!4v1754486212478!5m2!1sen!2sin" width="100%" height="450"></iframe>
       </div>
 
       <Card className="bg-gradient-card shadow-card">
