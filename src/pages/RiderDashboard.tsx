@@ -8,6 +8,7 @@ import LogSales from "@/components/rider/LogSales";
 import RequestMore from "@/components/rider/RequestMore";
 import CartHealth from "@/components/rider/carthealth";
 
+
 const sidebarItems = [
   {
     title: "Overview",
@@ -36,7 +37,7 @@ const sidebarItems = [
   },
   {
     title: "Cart Health",
-    href: "/CartHealth",
+    href: "/cart-health",
     icon: Battery,
   },
 ];
