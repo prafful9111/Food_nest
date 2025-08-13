@@ -1,13 +1,11 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
-import { MapPin, Package, DollarSign, Plus, Battery } from "lucide-react";
+import { MapPin, Package, DollarSign, Plus } from "lucide-react";
 import RiderOverview from "@/components/rider/RiderOverview";
 import MyRoute from "@/components/rider/MyRoute";
 import MyInventory from "@/components/rider/MyInventory";
 import LogSales from "@/components/rider/LogSales";
 import RequestMore from "@/components/rider/RequestMore";
-import CartHealth from "@/components/rider/carthealth";
-
 
 const sidebarItems = [
   {
@@ -35,11 +33,6 @@ const sidebarItems = [
     href: "/request",
     icon: Plus,
   },
-  {
-    title: "Cart Health",
-    href: "/cart-health",
-    icon: Battery,
-  },
 ];
 
 const RiderDashboard = () => {
@@ -57,7 +50,6 @@ const RiderDashboard = () => {
         <Route path="/inventory" element={<MyInventory />} />
         <Route path="/log-sales" element={<LogSales />} />
         <Route path="/request" element={<RequestMore />} />
-        <Route path="/carthealth" element={<CartHealth />} />
         <Route path="*" element={<Navigate to="/rider" replace />} />
       </Routes>
     </DashboardLayout>
