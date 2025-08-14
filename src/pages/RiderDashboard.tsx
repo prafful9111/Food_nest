@@ -6,7 +6,7 @@ import MyRoute from "@/components/rider/MyRoute";
 import MyInventory from "@/components/rider/MyInventory";
 import LogSales from "@/components/rider/LogSales";
 import RequestMore from "@/components/rider/RequestMore";
-import CartHealth from "@/components/rider/carthealth";
+import CartHealth from "@/components/rider/CartHealth";
 
 const sidebarItems = [
   {
