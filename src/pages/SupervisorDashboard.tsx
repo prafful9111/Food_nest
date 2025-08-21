@@ -1,11 +1,12 @@
 import { Routes, Route, Navigate } from "react-router-dom";
 import { DashboardLayout } from "@/components/layout/DashboardLayout";
-import { UserPlus, MapPin, Package, ClipboardList } from "lucide-react";
+import { UserPlus, MapPin, Package, ClipboardList, Warehouse } from "lucide-react";
 import SupervisorOverview from "@/components/supervisor/SupervisorOverview";
 import AssignRider from "@/components/supervisor/AssignRider";
 import ViewRoutes from "@/components/supervisor/ViewRoutes";
 import ViewInventory from "@/components/supervisor/ViewInventory";
 import RiderLogs from "@/components/supervisor/RiderLogs";
+import RawMaterialInventory from "@/components/supervisor/RawMaterialInventory";
 
 const sidebarItems = [
   {
@@ -28,6 +29,11 @@ const sidebarItems = [
     href: "/inventory",
     icon: Package,
   },
+    {
+    title: "Raw Material Inventory",
+    href: "/raw-materials",
+    icon: Warehouse,
+  },
   {
     title: "Rider Logs",
     href: "/rider-logs",
@@ -49,6 +55,7 @@ const SupervisorDashboard = () => {
         <Route path="/assign-rider" element={<AssignRider />} />
         <Route path="/routes" element={<ViewRoutes />} />
         <Route path="/inventory" element={<ViewInventory />} />
+                <Route path="/raw-materials" element={<RawMaterialInventory />} />
         <Route path="/rider-logs" element={<RiderLogs />} />
         <Route path="*" element={<Navigate to="/supervisor" replace />} />
       </Routes>
