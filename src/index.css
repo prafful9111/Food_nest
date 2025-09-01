@@ -8,121 +8,121 @@
 
 @layer base {
   :root {
-    --background: 48 100% 98%;
-    --foreground: 24 100% 8%;
+    --background: 48 100% 98%; /* Creamy yellow background */
+    --foreground: 30 30% 20%; /* Dark brown text for contrast */
 
-    --card: 0 0% 100%;
-    --card-foreground: 24 100% 8%;
+    --card: 48 100% 95%; /* Light yellow card background */
+    --card-foreground: 30 30% 20%; /* Dark brown text */
 
-    --popover: 0 0% 100%;
-    --popover-foreground: 24 100% 8%;
+    --popover: 48 100% 95%; /* Light yellow popover */
+    --popover-foreground: 30 30% 20%; /* Dark brown text */
 
-    --primary: 24 100% 50%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 24 100% 45%;
+    --primary: 48 100% 50%; /* Vibrant yellow */
+    --primary-foreground: 0 0% 0%; /* Black text for contrast */
+    --primary-hover: 48 100% 45%; /* Slightly darker yellow on hover */
 
-    --secondary: 45 100% 95%;
-    --secondary-foreground: 24 100% 20%;
+    --secondary: 45 100% 85%; /* Light golden yellow */
+    --secondary-foreground: 30 30% 25%; /* Dark brown text */
 
-    --muted: 45 50% 96%;
-    --muted-foreground: 24 20% 50%;
+    --muted: 45 50% 90%; /* Muted yellow */
+    --muted-foreground: 30 20% 40%; /* Muted brown text */
 
-    --accent: 120 60% 50%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 39 100% 50%; /* Golden yellow accent */
+    --accent-foreground: 0 0% 0%; /* Black text for contrast */
 
-    --success: 120 60% 50%;
-    --success-foreground: 0 0% 100%;
+    --success: 54 100% 60%; /* Bright yellow-green for success */
+    --success-foreground: 0 0% 0%; /* Black text for contrast */
 
-    --warning: 45 100% 60%;
-    --warning-foreground: 24 100% 10%;
+    --warning: 45 100% 60%; /* Warm amber warning */
+    --warning-foreground: 0 0% 0%; /* Black text for contrast */
 
-    --destructive: 0 84% 60%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84% 60%; /* Red for destructive actions */
+    --destructive-foreground: 0 0% 100%; /* White text */
 
-    --border: 45 30% 88%;
-    --input: 45 30% 88%;
-    --ring: 24 100% 50%;
+    --border: 45 50% 80%; /* Warm yellow border */
+    --input: 45 50% 80%; /* Warm yellow input borders */
+    --ring: 48 100% 50%; /* Vibrant yellow ring */
 
     --radius: 0.75rem;
 
-    /* Food-themed gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(24 100% 50%), hsl(45 100% 60%));
-    --gradient-success: linear-gradient(135deg, hsl(120 60% 50%), hsl(150 60% 45%));
-    --gradient-card: linear-gradient(135deg, hsl(0 0% 100%), hsl(45 20% 98%));
+    /* Food-themed yellow gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(48 100% 50%), hsl(39 100% 50%)); /* Gold to golden yellow */
+    --gradient-success: linear-gradient(135deg, hsl(54 100% 60%), hsl(48 100% 50%)); /* Yellow-green to yellow */
+    --gradient-card: linear-gradient(135deg, hsl(48 100% 95%), hsl(45 100% 90%)); /* Light yellow gradient */
 
-    /* Custom shadows */
-    --shadow-warm: 0 4px 20px hsla(24 100% 50% / 0.15);
-    --shadow-card: 0 2px 10px hsla(24 20% 50% / 0.1);
+    /* Warm yellow shadows */
+    --shadow-warm: 0 4px 20px hsla(48 100% 50% / 0.2); /* Yellow shadow */
+    --shadow-card: 0 2px 10px hsla(45 50% 70% / 0.15); /* Warm yellow card shadow */
 
-    --sidebar-background: 0 0% 98%;
+    --sidebar-background: 48 100% 95%; /* Light yellow sidebar */
 
-    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-foreground: 30 30% 25%; /* Dark brown text */
 
-    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary: 48 100% 40%; /* Rich yellow sidebar primary */
 
-    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-primary-foreground: 0 0% 100%; /* White text */
 
-    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent: 45 100% 85%; /* Light golden yellow accent */
 
-    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-accent-foreground: 30 30% 25%; /* Dark brown text */
 
-    --sidebar-border: 220 13% 91%;
+    --sidebar-border: 45 50% 80%; /* Warm yellow border */
 
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    --sidebar-ring: 48 100% 50%; /* Vibrant yellow ring */
   }
 
   .dark {
-    --background: 24 20% 8%;
-    --foreground: 45 100% 95%;
+    --background: 48 20% 10%; /* Dark yellow background */
+    --foreground: 48 100% 95%; /* Light yellow text */
 
-    --card: 24 25% 12%;
-    --card-foreground: 45 100% 95%;
+    --card: 48 25% 15%; /* Dark yellow card background */
+    --card-foreground: 48 100% 95%; /* Light yellow text */
 
-    --popover: 24 25% 12%;
-    --popover-foreground: 45 100% 95%;
+    --popover: 48 25% 15%; /* Dark yellow popover */
+    --popover-foreground: 48 100% 95%; /* Light yellow text */
 
-    --primary: 24 100% 60%;
-    --primary-foreground: 0 0% 100%;
-    --primary-hover: 24 100% 55%;
+    --primary: 48 100% 60%; /* Vibrant yellow */
+    --primary-foreground: 0 0% 0%; /* Black text for contrast */
+    --primary-hover: 48 100% 55%; /* Slightly darker yellow on hover */
 
-    --secondary: 24 20% 18%;
-    --secondary-foreground: 45 80% 85%;
+    --secondary: 45 20% 25%; /* Dark golden yellow */
+    --secondary-foreground: 48 100% 90%; /* Light yellow text */
 
-    --muted: 24 15% 15%;
-    --muted-foreground: 45 20% 65%;
+    --muted: 45 15% 20%; /* Muted dark yellow */
+    --muted-foreground: 48 20% 70%; /* Muted light yellow text */
 
-    --accent: 120 60% 60%;
-    --accent-foreground: 0 0% 100%;
+    --accent: 39 100% 60%; /* Golden yellow accent */
+    --accent-foreground: 0 0% 0%; /* Black text for contrast */
 
-    --success: 120 60% 60%;
-    --success-foreground: 0 0% 100%;
+    --success: 54 100% 60%; /* Bright yellow-green for success */
+    --success-foreground: 0 0% 0%; /* Black text for contrast */
 
-    --warning: 45 100% 70%;
-    --warning-foreground: 24 100% 10%;
+    --warning: 45 100% 70%; /* Warm amber warning */
+    --warning-foreground: 0 0% 0%; /* Black text for contrast */
 
-    --destructive: 0 84% 70%;
-    --destructive-foreground: 0 0% 100%;
+    --destructive: 0 84% 70%; /* Red for destructive actions */
+    --destructive-foreground: 0 0% 100%; /* White text */
 
-    --border: 24 20% 20%;
-    --input: 24 20% 20%;
-    --ring: 24 100% 60%;
+    --border: 45 20% 25%; /* Dark yellow border */
+    --input: 45 20% 25%; /* Dark yellow input borders */
+    --ring: 48 100% 60%; /* Vibrant yellow ring */
 
-    /* Dark mode gradients */
-    --gradient-primary: linear-gradient(135deg, hsl(24 100% 60%), hsl(45 100% 70%));
-    --gradient-success: linear-gradient(135deg, hsl(120 60% 60%), hsl(150 60% 55%));
-    --gradient-card: linear-gradient(135deg, hsl(24 25% 12%), hsl(24 20% 15%));
+    /* Dark mode yellow gradients */
+    --gradient-primary: linear-gradient(135deg, hsl(48 100% 60%), hsl(39 100% 55%)); /* Gold to golden yellow */
+    --gradient-success: linear-gradient(135deg, hsl(54 100% 60%), hsl(48 100% 55%)); /* Yellow-green to yellow */
+    --gradient-card: linear-gradient(135deg, hsl(48 25% 15%), hsl(45 20% 20%)); /* Dark yellow gradient */
 
-    /* Dark mode shadows */
-    --shadow-warm: 0 4px 20px hsla(24 100% 60% / 0.2);
-    --shadow-card: 0 2px 10px hsla(0 0% 0% / 0.3);
-    --sidebar-background: 240 5.9% 10%;
-    --sidebar-foreground: 240 4.8% 95.9%;
-    --sidebar-primary: 224.3 76.3% 48%;
-    --sidebar-primary-foreground: 0 0% 100%;
-    --sidebar-accent: 240 3.7% 15.9%;
-    --sidebar-accent-foreground: 240 4.8% 95.9%;
-    --sidebar-border: 240 3.7% 15.9%;
-    --sidebar-ring: 217.2 91.2% 59.8%;
+    /* Dark mode yellow shadows */
+    --shadow-warm: 0 4px 20px hsla(48 100% 60% / 0.25); /* Yellow shadow */
+    --shadow-card: 0 2px 10px hsla(45 20% 25% / 0.3); /* Dark yellow card shadow */
+    --sidebar-background: 48 25% 12%; /* Dark yellow sidebar */
+    --sidebar-foreground: 48 100% 90%; /* Light yellow text */
+    --sidebar-primary: 48 100% 50%; /* Vibrant yellow sidebar primary */
+    --sidebar-primary-foreground: 0 0% 0%; /* Black text */
+    --sidebar-accent: 45 20% 20%; /* Dark golden yellow accent */
+    --sidebar-accent-foreground: 48 100% 90%; /* Light yellow text */
+    --sidebar-border: 45 20% 25%; /* Dark yellow border */
+    --sidebar-ring: 48 100% 60%; /* Vibrant yellow ring */
   }
 }
 
