@@ -8,148 +8,63 @@ import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle, Di
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Textarea } from "@/components/ui/textarea";
-import { Plus, Truck, AlertTriangle, Edit, Wrench, Trash2, Battery, History, Eye } from "lucide-react";
+import { Plus, Truck, AlertTriangle, Edit, Wrench, Trash2, Battery, History, Eye, Loader2 } from "lucide-react";
+import { useGetVehiclesQuery, useCreateVehicleMutation, useDeleteVehicleMutation } from "@/store/api/vehicleApi";
+import { toast } from "sonner";
+import type { VehicleCreate } from "@/store/api/vehicleApi";
 
-const vehicles = [
-  {
-    id: 1,
-    registrationNo: "MH12AB1234",
-    serviceDate: "2024-01-15",
-    status: "Available",
-    assignedRider: null,
-    notes: "Recent maintenance completed",
-    batteryIMEI: "356938035643809"
-  },
-  {
-    id: 2,
-    registrationNo: "MH12CD5678",
-    serviceDate: "2024-01-10",
-    status: "In Use",
-    assignedRider: "John Smith",
-    notes: "Good condition",
-    batteryIMEI: "356938035643810"
-  },
-  {
-    id: 3,
-    registrationNo: "MH12EF9012",
-    serviceDate: "2023-12-20",
-    status: "Issue",
-    assignedRider: null,
-    notes: "Puncture repair needed",
-    batteryIMEI: null
-  },
-];
-
+// Temporary Mocks for what the API does not handle natively yet:
 const batteries = [
-  {
-    id: 1,
-    imei: "356938035643809",
-    vehicleId: 1,
-    type: "Lithium-ion 48V",
-    capacity: "20Ah",
-    installationDate: "2024-01-15",
-    status: "Active",
-    lastChecked: "2024-01-20"
-  },
-  {
-    id: 2,
-    imei: "356938035643810", 
-    vehicleId: 2,
-    type: "Lithium-ion 48V",
-    capacity: "20Ah",
-    installationDate: "2024-01-10",
-    status: "Active",
-    lastChecked: "2024-01-18"
-  }
+  { id: 1, imei: "356938035643809", vehicleId: 1, type: "Lithium-ion 48V", capacity: "20Ah", installationDate: "2024-01-15", status: "Active", lastChecked: "2024-01-20" },
 ];
 
 const serviceRecords = [
-  {
-    id: 1,
-    vehicleId: 1,
-    date: "2024-01-15",
-    type: "Regular Maintenance",
-    description: "Oil change, brake check, tire rotation",
-    cost: 2500,
-    mechanic: "Rajesh Kumar"
-  },
-  {
-    id: 2,
-    vehicleId: 1,
-    date: "2023-12-01",
-    type: "Repair",
-    description: "Chain replacement",
-    cost: 800,
-    mechanic: "Suresh Patel"
-  },
-  {
-    id: 3,
-    vehicleId: 2,
-    date: "2024-01-10",
-    type: "Regular Maintenance", 
-    description: "General service and battery check",
-    cost: 2200,
-    mechanic: "Rajesh Kumar"
-  },
-  {
-    id: 4,
-    vehicleId: 3,
-    date: "2023-12-20",
-    type: "Repair",
-    description: "Puncture repair and tire replacement",
-    cost: 1200,
-    mechanic: "Amit Singh"
-  }
-];
-
-const riders = [
-  { id: 1, name: "John Smith", available: false },
-  { id: 2, name: "Mike Davis", available: true },
-  { id: 3, name: "Sarah Johnson", available: true },
+  { id: 1, vehicleId: 1, date: "2024-01-15", type: "Regular Maintenance", description: "Oil change, brake check, tire rotation", cost: 2500, mechanic: "Rajesh Kumar" },
 ];
 
 const VehiclesManagement = () => {
+  const { data: vehicles, isLoading, error } = useGetVehiclesQuery();
+  const [createVehicle, { isLoading: isCreating }] = useCreateVehicleMutation();
+  const [deleteVehicle, { isLoading: isDeleting }] = useDeleteVehicleMutation();
+
   const [isAddOpen, setIsAddOpen] = useState(false);
   const [isIssueOpen, setIsIssueOpen] = useState(false);
   const [isBatteryOpen, setIsBatteryOpen] = useState(false);
   const [isServiceOpen, setIsServiceOpen] = useState(false);
   const [isRemoveOpen, setIsRemoveOpen] = useState(false);
   const [selectedVehicle, setSelectedVehicle] = useState<any>(null);
-  const [formData, setFormData] = useState({
-    registrationNo: "",
-    serviceDate: "",
-    status: "Available",
-    notes: ""
-  });
-  const [issueData, setIssueData] = useState({
-    issueType: "",
-    description: ""
-  });
-  const [batteryData, setBatteryData] = useState({
-    imei: "",
-    type: "",
-    capacity: "",
-    installationDate: "",
-    status: "Active"
+
+  const [formData, setFormData] = useState<VehicleCreate>({
+    registration_no: "",
+    status: "active",
   });
 
+  const [issueData, setIssueData] = useState({ issueType: "", description: "" });
+  const [batteryData, setBatteryData] = useState({ imei: "", type: "", capacity: "", installationDate: "", status: "Active" });
+
   const getStatusColor = (status: string) => {
-    switch (status) {
-      case 'Available':
+    switch (status.toLowerCase()) {
+      case 'active':
         return 'bg-success';
-      case 'In Use':
-        return 'bg-primary';
-      case 'Issue':
+      case 'in maintenance':
+        return 'bg-warning';
+      case 'out of service':
         return 'bg-destructive';
       default:
         return 'bg-muted';
     }
   };
 
-  const handleAddVehicle = () => {
-    // Add vehicle logic here
-    setIsAddOpen(false);
-    setFormData({ registrationNo: "", serviceDate: "", status: "Available", notes: "" });
+  const handleAddVehicle = async () => {
+    try {
+      await createVehicle(formData).unwrap();
+      toast.success("Vehicle successfully added!");
+      setIsAddOpen(false);
+      setFormData({ registration_no: "", status: "active" });
+    } catch (err) {
+      toast.error("Failed to add vehicle");
+      console.error(err);
+    }
   };
 
   const handleMarkIssue = (vehicle: any) => {
@@ -158,7 +73,6 @@ const VehiclesManagement = () => {
   };
 
   const handleSubmitIssue = () => {
-    // Submit issue logic here
     setIsIssueOpen(false);
     setSelectedVehicle(null);
     setIssueData({ issueType: "", description: "" });
@@ -169,10 +83,18 @@ const VehiclesManagement = () => {
     setIsRemoveOpen(true);
   };
 
-  const handleConfirmRemove = () => {
-    // Remove vehicle logic here
-    setIsRemoveOpen(false);
-    setSelectedVehicle(null);
+  const handleConfirmRemove = async () => {
+    if (selectedVehicle?.id) {
+      try {
+        await deleteVehicle(selectedVehicle.id).unwrap();
+        toast.success("Vehicle deleted successfully!");
+        setIsRemoveOpen(false);
+        setSelectedVehicle(null);
+      } catch (err) {
+        toast.error("Failed to remove vehicle");
+        console.error(err);
+      }
+    }
   };
 
   const handleAddBattery = (vehicle: any) => {
@@ -181,7 +103,6 @@ const VehiclesManagement = () => {
   };
 
   const handleSubmitBattery = () => {
-    // Add battery logic here
     setIsBatteryOpen(false);
     setSelectedVehicle(null);
     setBatteryData({ imei: "", type: "", capacity: "", installationDate: "", status: "Active" });
@@ -226,47 +147,29 @@ const VehiclesManagement = () => {
                 <Label htmlFor="registrationNo">Registration Number</Label>
                 <Input
                   id="registrationNo"
-                  value={formData.registrationNo}
-                  onChange={(e) => setFormData(prev => ({ ...prev, registrationNo: e.target.value }))}
+                  value={formData.registration_no}
+                  onChange={(e) => setFormData(prev => ({ ...prev, registration_no: e.target.value }))}
                   placeholder="e.g., MH12AB1234"
                 />
               </div>
               
               <div className="space-y-2">
-                <Label htmlFor="serviceDate">Last Service Date</Label>
-                <Input
-                  id="serviceDate"
-                  type="date"
-                  value={formData.serviceDate}
-                  onChange={(e) => setFormData(prev => ({ ...prev, serviceDate: e.target.value }))}
-                />
-              </div>
-              
-              <div className="space-y-2">
                 <Label htmlFor="status">Initial Status</Label>
-                <Select value={formData.status} onValueChange={(value) => setFormData(prev => ({ ...prev, status: value }))}>
+                <Select value={formData.status} onValueChange={(value) => setFormData(prev => ({ ...prev, status: value as any }))}>
                   <SelectTrigger>
                     <SelectValue />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="Available">Available</SelectItem>
-                    <SelectItem value="Issue">Issue</SelectItem>
+                    <SelectItem value="active">Active</SelectItem>
+                    <SelectItem value="in maintenance">In Maintenance</SelectItem>
+                    <SelectItem value="out of service">Out of Service</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
               
-              <div className="space-y-2">
-                <Label htmlFor="notes">Notes</Label>
-                <Textarea
-                  id="notes"
-                  value={formData.notes}
-                  onChange={(e) => setFormData(prev => ({ ...prev, notes: e.target.value }))}
-                  placeholder="Any additional notes about the vehicle"
-                />
-              </div>
-              
               <div className="flex gap-2 pt-4">
-                <Button onClick={handleAddVehicle} disabled={!formData.registrationNo}>
+                <Button onClick={handleAddVehicle} disabled={!formData.registration_no || isCreating}>
+                  {isCreating && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                   Add Vehicle
                 </Button>
                 <Button variant="outline" onClick={() => setIsAddOpen(false)}>
@@ -287,81 +190,93 @@ const VehiclesManagement = () => {
           <CardDescription>Track all vehicles and their current status</CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Registration No.</TableHead>
-                <TableHead>Service Date</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead>Assigned Rider</TableHead>
-                <TableHead>Notes</TableHead>
-                <TableHead>Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {vehicles.map((vehicle) => (
-                <TableRow key={vehicle.id}>
-                  <TableCell className="font-medium">{vehicle.registrationNo}</TableCell>
-                  <TableCell>{vehicle.serviceDate}</TableCell>
-                  <TableCell>
-                    <Badge 
-                      variant="outline"
-                      className={getStatusColor(vehicle.status)}
-                    >
-                      {vehicle.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell>
-                    {vehicle.assignedRider ? (
-                      <Badge variant="secondary">{vehicle.assignedRider}</Badge>
-                    ) : (
-                      <span className="text-muted-foreground">Unassigned</span>
-                    )}
-                  </TableCell>
-                  <TableCell className="max-w-xs truncate" title={vehicle.notes}>
-                    {vehicle.notes}
-                  </TableCell>
-                  <TableCell>
-                    <div className="flex gap-1">
-                      <Button variant="outline" size="sm">
-                        <Edit className="w-4 h-4" />
-                      </Button>
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => handleMarkIssue(vehicle)}
-                        disabled={vehicle.status === "Issue"}
-                      >
-                        <AlertTriangle className="w-4 h-4" />
-                      </Button>
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => handleAddBattery(vehicle)}
-                      >
-                        <Battery className="w-4 h-4" />
-                      </Button>
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => handleViewService(vehicle)}
-                      >
-                        <History className="w-4 h-4" />
-                      </Button>
-                      <Button 
-                        variant="outline" 
-                        size="sm" 
-                        onClick={() => handleRemoveVehicle(vehicle)}
-                        className="text-destructive hover:text-destructive"
-                      >
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
+          {isLoading ? (
+            <div className="flex justify-center items-center py-8">
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+          ) : error ? (
+            <div className="text-destructive text-center py-8">
+              Failed to load vehicles. The backend API might be offline.
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Registration No.</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead>Assigned Rider</TableHead>
+                  <TableHead>Actions</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {vehicles?.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={4} className="text-center py-4 text-muted-foreground">
+                      No vehicles found.
+                    </TableCell>
+                  </TableRow>
+                )}
+                {vehicles?.map((vehicle) => (
+                  <TableRow key={vehicle.id}>
+                    <TableCell className="font-medium">{vehicle.registration_no}</TableCell>
+                    <TableCell>
+                      <Badge 
+                        variant="outline"
+                        className={getStatusColor(vehicle.status || "active")}
+                      >
+                        {vehicle.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell>
+                      {vehicle.assigned_rider_id ? (
+                        <Badge variant="secondary">Rider {vehicle.assigned_rider_id}</Badge>
+                      ) : (
+                        <span className="text-muted-foreground">Unassigned</span>
+                      )}
+                    </TableCell>
+                    <TableCell>
+                      <div className="flex gap-1">
+                        <Button variant="outline" size="sm">
+                          <Edit className="w-4 h-4" />
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => handleMarkIssue(vehicle)}
+                          disabled={vehicle.status === "in maintenance"}
+                        >
+                          <AlertTriangle className="w-4 h-4" />
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => handleAddBattery(vehicle)}
+                        >
+                          <Battery className="w-4 h-4" />
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => handleViewService(vehicle)}
+                        >
+                          <History className="w-4 h-4" />
+                        </Button>
+                        <Button 
+                          variant="outline" 
+                          size="sm" 
+                          onClick={() => handleRemoveVehicle(vehicle)}
+                          className="text-destructive hover:text-destructive"
+                          disabled={isDeleting}
+                        >
+                          <Trash2 className="w-4 h-4" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
 
@@ -370,7 +285,7 @@ const VehiclesManagement = () => {
           <DialogHeader>
             <DialogTitle>Report Vehicle Issue</DialogTitle>
             <DialogDescription>
-              Mark vehicle {selectedVehicle?.registrationNo} as having an issue
+              Mark vehicle {selectedVehicle?.registration_no} as having an issue
             </DialogDescription>
           </DialogHeader>
           <div className="space-y-4">
@@ -418,7 +333,7 @@ const VehiclesManagement = () => {
           <DialogHeader>
             <DialogTitle>Remove Vehicle</DialogTitle>
             <DialogDescription>
-              Are you sure you want to remove vehicle {selectedVehicle?.registrationNo}? This action cannot be undone.
+              Are you sure you want to remove vehicle {selectedVehicle?.registration_no}? This action cannot be undone.
             </DialogDescription>
           </DialogHeader>
           <div className="flex gap-2 pt-4">
@@ -438,7 +353,7 @@ const VehiclesManagement = () => {
           <DialogHeader>
             <DialogTitle>Battery Management</DialogTitle>
             <DialogDescription>
-              Manage battery for vehicle {selectedVehicle?.registrationNo}
+              Manage battery for vehicle {selectedVehicle?.registration_no}
             </DialogDescription>
           </DialogHeader>
           
@@ -532,7 +447,7 @@ const VehiclesManagement = () => {
           <DialogHeader>
             <DialogTitle>Service Records</DialogTitle>
             <DialogDescription>
-              Service history for vehicle {selectedVehicle?.registrationNo}
+              Service history for vehicle {selectedVehicle?.registration_no}
             </DialogDescription>
           </DialogHeader>
           

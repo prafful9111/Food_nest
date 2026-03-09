@@ -7,18 +7,56 @@ import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { Badge } from "@/components/ui/badge";
-import { Switch } from "@/components/ui/switch";
-import { Plus, Edit, Trash2 } from "lucide-react";
-
-const users = [
-  { id: 1, name: "John Smith", email: "john@foodcart.com", role: "Rider", status: "Active" },
-  { id: 2, name: "Sarah Johnson", email: "sarah@foodcart.com", role: "Cook", status: "Active" },
-  { id: 3, name: "Mike Davis", email: "mike@foodcart.com", role: "Supervisor", status: "Active" },
-  { id: 4, name: "Emily Brown", email: "emily@foodcart.com", role: "Rider", status: "Inactive" },
-];
+import { Plus, Edit, Trash2, Loader2 } from "lucide-react";
+import { useGetUsersQuery, useCreateUserMutation, useDeleteUserMutation } from "@/store/api/userApi";
+import { toast } from "sonner";
+import type { UserCreate } from "@/store/api/userApi";
 
 const UserManagement = () => {
   const [isAddUserOpen, setIsAddUserOpen] = useState(false);
+  const { data: users, isLoading, error } = useGetUsersQuery();
+  const [createUser, { isLoading: isCreating }] = useCreateUserMutation();
+  const [deleteUser, { isLoading: isDeleting }] = useDeleteUserMutation();
+
+  // Basic Form State
+  const [formData, setFormData] = useState<UserCreate>({
+    name: "",
+    email: "",
+    role: "",
+    password: "", // Usually generated or passed here
+  });
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData((prev) => ({ ...prev, [e.target.id]: e.target.value }));
+  };
+
+  const handleRoleChange = (val: string) => {
+    setFormData((prev) => ({ ...prev, role: val }));
+  };
+
+  const handleCreateUser = async () => {
+    try {
+      await createUser(formData).unwrap();
+      toast.success("User successfully created!");
+      setIsAddUserOpen(false);
+      setFormData({ name: "", email: "", role: "", password: "" });
+    } catch (err) {
+      toast.error("Failed to create user");
+      console.error(err);
+    }
+  };
+
+  const handleDeleteUser = async (id: string) => {
+    if (confirm("Are you sure you want to delete this user?")) {
+      try {
+        await deleteUser(id).unwrap();
+        toast.success("User deleted successfully!");
+      } catch (err) {
+        toast.error("Failed to delete user");
+        console.error(err);
+      }
+    }
+  };
 
   return (
     <div className="space-y-6">
@@ -40,170 +78,43 @@ const UserManagement = () => {
               <DialogDescription>Create a new user account for the system.</DialogDescription>
             </DialogHeader>
 
-            {/* Basic Info */}
             <div className="gap-4 grid py-4">
               <div className="items-center gap-4 grid grid-cols-4">
                 <Label htmlFor="name" className="text-right">Name</Label>
-                <Input id="name" placeholder="Full name" className="col-span-3" />
+                <Input id="name" value={formData.name} onChange={handleChange} placeholder="Full name" className="col-span-3" />
               </div>
               <div className="items-center gap-4 grid grid-cols-4">
                 <Label htmlFor="email" className="text-right">Email</Label>
-                <Input id="email" placeholder="user@email.com" className="col-span-3" />
+                <Input id="email" type="email" value={formData.email} onChange={handleChange} placeholder="user@email.com" className="col-span-3" />
+              </div>
+              <div className="items-center gap-4 grid grid-cols-4">
+                <Label htmlFor="password" className="text-right">Password</Label>
+                <Input id="password" type="password" value={formData.password} onChange={handleChange} placeholder="••••••••" className="col-span-3" />
               </div>
               <div className="items-center gap-4 grid grid-cols-4">
                 <Label htmlFor="role" className="text-right">Role</Label>
-                <Select>
+                <Select value={formData.role} onValueChange={handleRoleChange}>
                   <SelectTrigger className="col-span-3">
                     <SelectValue placeholder="Select a role" />
                   </SelectTrigger>
                   <SelectContent>
-                    <SelectItem value="rider">Rider</SelectItem>
-                    <SelectItem value="cook">Cook</SelectItem>
-                    <SelectItem value="supervisor">Supervisor</SelectItem>
-                    <SelectItem value="admin">Admin</SelectItem>
-                    <SelectItem value="kitchen-helper">Kitchen Helper</SelectItem>
+                    <SelectItem value="Superadmin">Super Admin</SelectItem>
+                    <SelectItem value="Rider">Rider</SelectItem>
+                    <SelectItem value="Cook">Cook</SelectItem>
+                    <SelectItem value="Supervisor">Supervisor</SelectItem>
+                    <SelectItem value="Refill Coordinator">Refill Coordinator</SelectItem>
                   </SelectContent>
                 </Select>
               </div>
             </div>
 
-            {/* Salary Details */}
-            <div className="my-2 pt-4 border-t border-border">
-              <h4 className="mb-3 font-semibold text-muted-foreground text-sm tracking-wide">
-                Salary Details
-              </h4>
-
-              <div className="gap-4 grid">
-                {/* Row 1: Currency / Base Salary */}
-                <div className="items-center gap-4 grid grid-cols-4">
-                  <Label htmlFor="currency" className="text-right">Currency</Label>
-                  <Select>
-                    <SelectTrigger id="currency" className="col-span-3">
-                      <SelectValue placeholder="Choose currency" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="THB">THB — Thai Baht</SelectItem>
-                      <SelectItem value="INR">INR — Indian Rupee</SelectItem>
-                      <SelectItem value="USD">USD — US Dollar</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="items-center gap-4 grid grid-cols-4">
-                  <Label htmlFor="base-salary" className="text-right">Base Salary</Label>
-                  <Input id="base-salary" type="number" placeholder="e.g., 25000" className="col-span-3" />
-                </div>
-
-                {/* Row 2: Frequency / Employment Type */}
-                <div className="items-center gap-4 grid grid-cols-4">
-                  <Label htmlFor="frequency" className="text-right">Pay Frequency</Label>
-                  <Select>
-                    <SelectTrigger id="frequency" className="col-span-3">
-                      <SelectValue placeholder="Select frequency" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="monthly">Monthly</SelectItem>
-                      <SelectItem value="weekly">Weekly</SelectItem>
-                      <SelectItem value="daily">Daily</SelectItem>
-                      <SelectItem value="hourly">Hourly</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                <div className="items-center gap-4 grid grid-cols-4">
-                  <Label htmlFor="employment-type" className="text-right">Employment Type</Label>
-                  <Select>
-                    <SelectTrigger id="employment-type" className="col-span-3">
-                      <SelectValue placeholder="Select type" />
-                    </SelectTrigger>
-                    <SelectContent>
-                      <SelectItem value="full-time">Full-time</SelectItem>
-                      <SelectItem value="part-time">Part-time</SelectItem>
-                      <SelectItem value="contract">Contract</SelectItem>
-                      <SelectItem value="gig">Gig / On-demand</SelectItem>
-                    </SelectContent>
-                  </Select>
-                </div>
-
-                {/* Row 3: VAT/Tax / Effective From */}
-                <div className="items-center gap-4 grid grid-cols-4">
-                  <Label htmlFor="vat" className="text-right">Tax / VAT (%)</Label>
-                  <Input id="vat" type="number" step="0.01" placeholder="e.g., 5" className="col-span-3" />
-                </div>
-
-                <div className="items-center gap-4 grid grid-cols-4">
-                  <Label htmlFor="effective" className="text-right">Effective From</Label>
-                  <Input id="effective" type="date" className="col-span-3" />
-                </div>
-
-                {/* Row 4: Overtime Eligible / Overtime Rate */}
-                <div className="items-center gap-4 grid grid-cols-4">
-                  <Label htmlFor="ot-eligible" className="text-right">Overtime Eligible</Label>
-                  <div className="flex items-center gap-3 col-span-3">
-                    <Switch id="ot-eligible" />
-                    <Input
-                      id="ot-rate"
-                      type="number"
-                      step="0.01"
-                      placeholder="OT Rate (% of base/hourly), e.g., 150"
-                      className="flex-1"
-                    />
-                  </div>
-                </div>
-
-                {/* Row 5: Allowances / Deductions */}
-                <div className="items-center gap-4 grid grid-cols-4">
-                  <Label htmlFor="allowances" className="text-right">Allowances</Label>
-                  <Input id="allowances" type="number" placeholder="Monthly total allowances" className="col-span-3" />
-                </div>
-
-                <div className="items-center gap-4 grid grid-cols-4">
-                  <Label htmlFor="deductions" className="text-right">Deductions</Label>
-                  <Input id="deductions" type="number" placeholder="Monthly total deductions" className="col-span-3" />
-                </div>
-
-                {/* Row 6: Tax ID (optional) */}
-                <div className="items-center gap-4 grid grid-cols-4">
-                  <Label htmlFor="taxid" className="text-right">Tax ID (optional)</Label>
-                  <Input id="taxid" placeholder="PAN / TIN / National Tax ID" className="col-span-3" />
-                </div>
-
-                {/* Bank Details */}
-                <div className="bg-muted mt-2 p-3 rounded-lg">
-                  <p className="mb-3 font-medium text-sm">Bank Details</p>
-                  <div className="gap-4 grid">
-                    <div className="items-center gap-4 grid grid-cols-4">
-                      <Label htmlFor="acct-holder" className="text-right">Account Holder</Label>
-                      <Input id="acct-holder" placeholder="Name as per bank" className="col-span-3" />
-                    </div>
-                    <div className="items-center gap-4 grid grid-cols-4">
-                      <Label htmlFor="acct-no" className="text-right">Account No / IBAN</Label>
-                      <Input id="acct-no" placeholder="XXXX-XXXX-XXXX" className="col-span-3" />
-                    </div>
-                    <div className="items-center gap-4 grid grid-cols-4">
-                      <Label htmlFor="bank-name" className="text-right">Bank Name</Label>
-                      <Input id="bank-name" placeholder="e.g., HDFC, SCB" className="col-span-3" />
-                    </div>
-                    <div className="items-center gap-4 grid grid-cols-4">
-                      <Label htmlFor="ifsc" className="text-right">IFSC / SWIFT</Label>
-                      <Input id="ifsc" placeholder="IFSC (India) / SWIFT (Intl.)" className="col-span-3" />
-                    </div>
-                  </div>
-                </div>
-
-                {/* Notes */}
-                <div className="items-center gap-4 grid grid-cols-4">
-                  <Label htmlFor="notes" className="text-right">Notes</Label>
-                  <Input id="notes" placeholder="Any special pay terms / remarks" className="col-span-3" />
-                </div>
-              </div>
-            </div>
-
             <div className="flex justify-end gap-2">
-              <Button onClick={() => setIsAddUserOpen(false)}>Create User</Button>
+              <Button onClick={handleCreateUser} disabled={isCreating}>
+                {isCreating && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
+                Create User
+              </Button>
             </div>
           </DialogContent>
-
         </Dialog>
       </div>
 
@@ -215,46 +126,63 @@ const UserManagement = () => {
           </CardDescription>
         </CardHeader>
         <CardContent>
-          <Table>
-            <TableHeader>
-              <TableRow>
-                <TableHead>Name</TableHead>
-                <TableHead>Email</TableHead>
-                <TableHead>Role</TableHead>
-                <TableHead>Status</TableHead>
-                <TableHead className="text-right">Actions</TableHead>
-              </TableRow>
-            </TableHeader>
-            <TableBody>
-              {users.map((user) => (
-                <TableRow key={user.id}>
-                  <TableCell className="font-medium">{user.name}</TableCell>
-                  <TableCell>{user.email}</TableCell>
-                  <TableCell>
-                    <Badge variant="outline">{user.role}</Badge>
-                  </TableCell>
-                  <TableCell>
-                    <Badge
-                      variant={user.status === "Active" ? "default" : "secondary"}
-                      className={user.status === "Active" ? "bg-success" : ""}
-                    >
-                      {user.status}
-                    </Badge>
-                  </TableCell>
-                  <TableCell className="text-right">
-                    <div className="flex justify-end gap-2">
-                      <Button variant="outline" size="sm">
-                        <Edit className="w-4 h-4" />
-                      </Button>
-                      <Button variant="outline" size="sm">
-                        <Trash2 className="w-4 h-4" />
-                      </Button>
-                    </div>
-                  </TableCell>
+          {isLoading ? (
+            <div className="flex justify-center items-center py-8">
+              <Loader2 className="w-8 h-8 animate-spin text-primary" />
+            </div>
+          ) : error ? (
+            <div className="text-destructive text-center py-8">
+              Failed to load users. The backend API might be offline.
+            </div>
+          ) : (
+            <Table>
+              <TableHeader>
+                <TableRow>
+                  <TableHead>Name</TableHead>
+                  <TableHead>Email</TableHead>
+                  <TableHead>Role</TableHead>
+                  <TableHead>Status</TableHead>
+                  <TableHead className="text-right">Actions</TableHead>
                 </TableRow>
-              ))}
-            </TableBody>
-          </Table>
+              </TableHeader>
+              <TableBody>
+                {users?.length === 0 && (
+                  <TableRow>
+                    <TableCell colSpan={5} className="text-center py-4 text-muted-foreground">
+                      No users found.
+                    </TableCell>
+                  </TableRow>
+                )}
+                {users?.map((user) => (
+                  <TableRow key={user.id}>
+                    <TableCell className="font-medium">{user.name}</TableCell>
+                    <TableCell>{user.email}</TableCell>
+                    <TableCell>
+                      <Badge variant="outline">{user.role}</Badge>
+                    </TableCell>
+                    <TableCell>
+                      <Badge
+                        variant={user.status === "active" ? "default" : "secondary"}
+                        className={user.status === "active" ? "bg-success" : ""}
+                      >
+                        {user.status}
+                      </Badge>
+                    </TableCell>
+                    <TableCell className="text-right">
+                      <div className="flex justify-end gap-2">
+                        <Button variant="outline" size="sm" onClick={() => {/* TODO: Edit Logic */}}>
+                          <Edit className="w-4 h-4" />
+                        </Button>
+                        <Button variant="outline" size="sm" onClick={() => handleDeleteUser(user.id)} disabled={isDeleting}>
+                          <Trash2 className="w-4 h-4 text-destructive" />
+                        </Button>
+                      </div>
+                    </TableCell>
+                  </TableRow>
+                ))}
+              </TableBody>
+            </Table>
+          )}
         </CardContent>
       </Card>
     </div>

@@ -6,6 +6,9 @@ import { useTheme } from "@/components/theme-provider";
 import { Moon, Sun, User, LogOut, Settings, Menu } from "lucide-react";
 import ShiftManager from "@/components/ui/ShiftManager";
 import { BackButton } from '@/components/ui/BackButton';
+import { useNavigate } from "react-router-dom";
+import { useAppDispatch } from "@/store/hooks";
+import { logout } from "@/store/slices/authSlice";
 
 interface DashboardHeaderProps {
   userName: string;
@@ -17,6 +20,13 @@ interface DashboardHeaderProps {
 export function DashboardHeader({ userName, userRole, userAvatar, onToggleSidebar }: DashboardHeaderProps) {
   const { theme, setTheme } = useTheme();
   const [isShiftActive, setIsShiftActive] = useState(true);
+  const navigate = useNavigate();
+  const dispatch = useAppDispatch();
+
+  const handleLogout = () => {
+    dispatch(logout());
+    navigate('/');
+  };
 
   const handleShiftEnd = (reason?: string) => {
     setIsShiftActive(false);
@@ -92,7 +102,7 @@ export function DashboardHeader({ userName, userRole, userAvatar, onToggleSideba
                 <Settings className="mr-2 w-4 h-4" />
                 <span>Settings</span>
               </DropdownMenuItem>
-              <DropdownMenuItem>
+              <DropdownMenuItem onClick={handleLogout}>
                 <LogOut className="mr-2 w-4 h-4" />
                 <span>Log out</span>
               </DropdownMenuItem>
